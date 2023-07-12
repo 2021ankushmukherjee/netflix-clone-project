@@ -39,19 +39,38 @@ const Row = ({ title, movArr=[]}) => {
 
 const Home = () => {
 
-  const [upcomingMovies, setUpcomingMovies] = useState([])
-
+  const [upcomingMovies, setUpcomingMovies] = useState([]);
+  const [popularMovies, setPopularMovies] = useState([]);
+  const [topRatedMovies, setTopRatedMovies] = useState([]);
+  const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
 
   useEffect(()=>{
 
     const fetchUpcomingMovies = async() =>{
-
       const {data:{results}} = await axios.get(upComingMovieUri);
       setUpcomingMovies(results);
+    }
 
+    const fetchPopularMovies = async() =>{
+      const {data:{results}} = await axios.get(popularMovieUri);
+      setPopularMovies(results);
+    }
+
+
+    const fetchTopRatedMovies = async() =>{
+      const {data:{results}} = await axios.get(topRatedMovieUri);
+      setTopRatedMovies(results);
+    }
+
+    const fetchNowPlayingMovies = async() =>{
+      const {data:{results}} = await axios.get(nowPlayingMovieUri);
+      setNowPlayingMovies(results);
     }
 
     fetchUpcomingMovies();
+    fetchPopularMovies();
+    fetchTopRatedMovies();
+    fetchNowPlayingMovies();
 
   }, [])
 
@@ -59,9 +78,9 @@ const Home = () => {
     <section className="home">
       <div className="banner"></div>
       <Row title={"Upcoming Movies"} movArr={upcomingMovies} />
-      <Row title={"Popular on netflix"} />
-      <Row title={"Popular on netflix"} />
-      <Row title={"Popular on netflix"} />
+      <Row title={"Popular Movies"} movArr={popularMovies} />
+      <Row title={"Top Rated"} movArr={topRatedMovies}/>
+      <Row title={"Now Playing"} movArr={nowPlayingMovies} />
     </section>
   )
 }
