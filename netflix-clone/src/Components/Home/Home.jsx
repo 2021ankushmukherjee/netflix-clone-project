@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { BiPlay } from 'react-icons/bi';
+import { AiOutlinePlus } from 'react-icons/ai'
 import "./Home.scss";
 import axios from 'axios';
 
@@ -18,18 +20,18 @@ const Card = ({ img }) => {
 }
 
 
-const Row = ({ title, movArr=[]}) => {
+const Row = ({ title, movArr = [] }) => {
 
   return (
     <div className='row'>
       <h2>{title}</h2>
       <div>
-          {
-            movArr.map((item, index)=>(
-              <Card key={index} img={`${imgUrl}/${item.poster_path}`} ></Card>
-            ))
-          }
-      
+        {
+          movArr.map((item, index) => (
+            <Card key={index} img={`${imgUrl}/${item.poster_path}`} ></Card>
+          ))
+        }
+
       </div>
     </div>
   );
@@ -44,26 +46,27 @@ const Home = () => {
   const [topRatedMovies, setTopRatedMovies] = useState([]);
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
 
-  useEffect(()=>{
 
-    const fetchUpcomingMovies = async() =>{
-      const {data:{results}} = await axios.get(upComingMovieUri);
+  useEffect(() => {
+
+    const fetchUpcomingMovies = async () => {
+      const { data: { results } } = await axios.get(upComingMovieUri);
       setUpcomingMovies(results);
     }
 
-    const fetchPopularMovies = async() =>{
-      const {data:{results}} = await axios.get(popularMovieUri);
+    const fetchPopularMovies = async () => {
+      const { data: { results } } = await axios.get(popularMovieUri);
       setPopularMovies(results);
     }
 
 
-    const fetchTopRatedMovies = async() =>{
-      const {data:{results}} = await axios.get(topRatedMovieUri);
+    const fetchTopRatedMovies = async () => {
+      const { data: { results } } = await axios.get(topRatedMovieUri);
       setTopRatedMovies(results);
     }
 
-    const fetchNowPlayingMovies = async() =>{
-      const {data:{results}} = await axios.get(nowPlayingMovieUri);
+    const fetchNowPlayingMovies = async () => {
+      const { data: { results } } = await axios.get(nowPlayingMovieUri);
       setNowPlayingMovies(results);
     }
 
@@ -76,10 +79,18 @@ const Home = () => {
 
   return (
     <section className="home">
-      <div className="banner"></div>
+      <div className="banner" style={{ backgroundImage: popularMovies[1] ? `url(${`${imgUrl}${popularMovies[1].poster_path}`})` : "rgb(8, 8, 8)" }}>
+        {popularMovies[1] && <h1>{popularMovies[1].original_title}</h1>}
+        {popularMovies[1] && <p>{popularMovies[1].overview}</p>}
+        <div>
+          <button><BiPlay/>Play Now </button>
+          <button>My List  <AiOutlinePlus /></button>
+        </div>
+
+      </div>
       <Row title={"Upcoming Movies"} movArr={upcomingMovies} />
       <Row title={"Popular Movies"} movArr={popularMovies} />
-      <Row title={"Top Rated"} movArr={topRatedMovies}/>
+      <Row title={"Top Rated"} movArr={topRatedMovies} />
       <Row title={"Now Playing"} movArr={nowPlayingMovies} />
     </section>
   )

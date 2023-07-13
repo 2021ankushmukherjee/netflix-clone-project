@@ -1,8 +1,65 @@
 $bg: rgb(8, 8, 8);
 
 .banner {
-    height: 400px;
+    height: 800px;
     background-color: $bg;
+    background-size: cover;
+    background-repeat:no-repeat ;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    &::after{
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: $bg;
+        opacity: 0.4;
+
+    }
+
+    h1{
+        color: white;
+        font-size: 4rem;
+        width: 40%;
+        z-index: 10;
+    }
+
+    p{
+        font-size: 2rem;
+        letter-spacing: 1px;
+        z-index: 8;
+        color: white;
+    }
+
+    > div{
+        display: flex;
+
+
+
+        button{
+            padding: 1rem;
+            outline: none;
+            border: none;
+            z-index: 10;
+            width: 150px;
+            border-radius: 5px;
+            margin: 1rem;
+            background-color: white;
+            font-size: 1.2rem;  
+            align-items: center;
+            justify-content: center;
+           
+            
+        }
+
+    }
+
+
+
+
 }
 
 
